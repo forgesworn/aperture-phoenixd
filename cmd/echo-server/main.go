@@ -13,14 +13,17 @@ func main() {
 		addr = ":" + port
 	}
 
-	http.HandleFunc("/v1/echo", func(w http.ResponseWriter, r *http.Request) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
 		body, err := io.ReadAll(r.Body)
 		if err != nil || len(body) == 0 {
 			fmt.Fprintln(w, "hello")
 			return
 		}
 		w.Write(body)
-	})
+	}
+
+	http.HandleFunc("/v1/echo", handler)
+	http.HandleFunc("/", handler)
 
 	fmt.Fprintf(os.Stderr, "echo-server listening on %s\n", addr)
 	if err := http.ListenAndServe(addr, nil); err != nil {
