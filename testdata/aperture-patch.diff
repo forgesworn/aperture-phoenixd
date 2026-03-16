@@ -1,0 +1,48 @@
+Patch against github.com/lightninglabs/aperture to wire in the Phoenixd challenger.
+Apply with: git apply testdata/aperture-patch.diff
+
+--- a/config.go
++++ b/config.go
+@@ -XX,6 +XX,12 @@ type AuthConfig struct {
+ 	// LndHost is the host:port of the LND node to use for invoice creation.
+ 	// Mutually exclusive with Passphrase (LNC). When neither is set, the
+ 	// mock challenger is used.
+ 	LndHost string `long:"lndhost" description:"The host:port of the LND node"`
+
++	// PhoenixdURL is the base URL of a Phoenixd instance (e.g.
++	// http://localhost:9740). When set, Phoenixd is used instead of
++	// LND for invoice creation. Requires strictVerify=false (default).
++	PhoenixdURL string `long:"phoenixdurl" description:"The URL of a Phoenixd instance"`
++
++	// PhoenixdPassword is the HTTP API password for the Phoenixd instance.
++	PhoenixdPassword string `long:"phoenixdpassword" description:"Phoenixd HTTP API password"`
++
+ 	// Passphrase is the passphrase for the LNC pairing phrase. Mutually
+ 	// exclusive with LndHost.
+ 	Passphrase string `long:"passphrase" description:"The passphrase for the LNC pairing phrase"`
+
+--- a/aperture.go
++++ b/aperture.go
+@@ -XX,6 +XX,10 @@ import (
+ 	"github.com/lightninglabs/aperture/auth"
+ 	"github.com/lightninglabs/aperture/mint"
++	phoenixd "github.com/TheCryptoDonkey/aperture-phoenixd"
+ )
+
+@@ -XX,6 +XX,14 @@ func (a *Aperture) Start(errChan chan error) error {
+ 	var challenger mint.Challenger
+ 	switch {
+ 	case cfg.Authenticator.LndHost != "":
+ 		// ... existing LND setup ...
+
++	case cfg.Authenticator.PhoenixdURL != "":
++		challenger, err = phoenixd.NewChallenger(
++			cfg.Authenticator.PhoenixdURL,
++			cfg.Authenticator.PhoenixdPassword,
++		), nil
++		if err != nil {
++			return err
++		}
++
+ 	case cfg.Authenticator.Passphrase != "":
+ 		// ... existing LNC setup ...
