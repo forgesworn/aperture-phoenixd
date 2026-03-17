@@ -1,6 +1,6 @@
 services:
   phoenixd:
-    image: ghcr.io/acinq/phoenixd:latest
+    image: ghcr.io/acinq/phoenixd:0.4.0
     restart: always
     ports:
       - "127.0.0.1:9740:9740"
@@ -21,15 +21,16 @@ services:
     build:
       context: ..
       dockerfile: deploy/Dockerfile
-    command: ["aperture", "--configfile=/etc/aperture/aperture.yaml"]
+    entrypoint: ["/bin/sh", "-c", "envsubst < /etc/aperture/aperture.yaml.tmpl > /etc/aperture/aperture.yaml && exec aperture --configfile=/etc/aperture/aperture.yaml"]
     restart: always
     ports:
       - "0.0.0.0:8081:8081"
     volumes:
-      - ./aperture.yaml:/etc/aperture/aperture.yaml:ro
-      - aperture-data:/root/.aperture
+      - ./aperture.yaml:/etc/aperture/aperture.yaml.tmpl:ro
+      - aperture-data:/home/aperture/.aperture
     environment:
       - PHOENIXD_PASSWORD=${PHOENIXD_PASSWORD}
+    user: "1000"
     depends_on:
       - phoenixd
       - echo-server
