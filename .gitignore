@@ -7,6 +7,17 @@
 deploy/.env
 .env
 
+# Cryptographic material
+*.pem
+*.key
+*.cert
+*.crt
+*.macaroon
+
+# Databases
+*.db
+*.sqlite
+
 # Editor artifacts
 .idea/
 .vscode/
