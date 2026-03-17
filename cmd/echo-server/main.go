@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -16,7 +17,16 @@ func main() {
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		r.Body = http.MaxBytesReader(w, r.Body, 1<<20) // 1 MiB
 		body, err := io.ReadAll(r.Body)
-		if err != nil || len(body) == 0 {
+		if err != nil {
+			var maxErr *http.MaxBytesError
+			if errors.As(err, &maxErr) {
+				http.Error(w, "request body too large", http.StatusRequestEntityTooLarge)
+				return
+			}
+			fmt.Fprintln(w, "hello")
+			return
+		}
+		if len(body) == 0 {
 			fmt.Fprintln(w, "hello")
 			return
 		}
