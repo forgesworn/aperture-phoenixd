@@ -1,0 +1,6 @@
+.git
+echo-server
+*.test
+deploy/.env
+.idea
+.vscode

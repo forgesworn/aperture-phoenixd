@@ -1,0 +1,15 @@
+# Compiled binaries
+/echo-server
+*.exe
+*.test
+
+# Environment files with secrets
+deploy/.env
+.env
+
+# Editor artifacts
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
