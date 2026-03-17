@@ -1,0 +1,68 @@
+# aperture-phoenixd
+
+> Running Aperture's L402 reverse proxy requires an LND node — heavy
+> infrastructure for what is essentially "create invoice, verify payment."
+> aperture-phoenixd is a Go library that replaces LND with Phoenixd, a
+> lightweight Lightning node from ACINQ.
+
+Implements Aperture's `mint.Challenger` and `auth.InvoiceChecker` interfaces
+against Phoenixd's REST API. Drop-in replacement with zero Aperture or LND
+dependencies — uses plain Go types (`[32]byte` for payment hashes) that are
+assignment-compatible with Aperture's `lntypes.Hash`.
+
+Designed for developers who want L402-gated APIs without running a full
+Lightning node. Works with `strictVerify=false` (Aperture's default).
+
+## Getting Started
+
+Install:
+
+```
+go get github.com/TheCryptoDonkey/aperture-phoenixd
+```
+
+Use:
+
+```go
+import phoenixd "github.com/TheCryptoDonkey/aperture-phoenixd"
+
+challenger := phoenixd.NewChallenger("http://localhost:9740", "your-phoenixd-password")
+
+// Create an L402 challenge (Lightning invoice)
+payReq, hash, err := challenger.NewChallenge(priceSats)
+
+// Verify invoice status (no-op for strictVerify=false)
+err = challenger.VerifyInvoiceStatus(hash, price, service)
+
+// Stop (no-op — stateless HTTP client)
+challenger.Stop()
+```
+
+Wire into Aperture using the ~20-line patch in `testdata/aperture-patch.diff`.
+
+## Key Concepts
+
+- **PhoenixdChallenger** — the main type. Wraps a Phoenixd HTTP client and
+  satisfies Aperture's challenger interfaces.
+- **Client** — low-level HTTP client for Phoenixd's `/createinvoice` and
+  `/payments/incoming/{hash}` endpoints.
+- **strictVerify=false** — the only supported mode. Macaroon + preimage
+  verification is the security model. Phoenixd lacks the WebSocket events
+  needed for full invoice status tracking.
+
+## API Surface
+
+- `NewChallenger(phoenixdURL, password string) *PhoenixdChallenger`
+- `(*PhoenixdChallenger).NewChallenge(price int64) (string, [32]byte, error)`
+- `(*PhoenixdChallenger).VerifyInvoiceStatus(hash [32]byte, price int64, service string) error`
+- `(*PhoenixdChallenger).Stop()`
+- `NewClient(baseURL, password string) *Client`
+- `(*Client).CreateInvoice(ctx, amountSats int64, description string) (*Invoice, error)`
+- `(*Client).GetPayment(ctx, paymentHash string) (*Payment, error)`
+
+## Optional
+
+- [README](https://github.com/TheCryptoDonkey/aperture-phoenixd/blob/main/README.md)
+- [Aperture integration patch](https://github.com/TheCryptoDonkey/aperture-phoenixd/blob/main/testdata/aperture-patch.diff)
+- [Echo server demo](https://github.com/TheCryptoDonkey/aperture-phoenixd/tree/main/cmd/echo-server)
+- [GoDoc](https://pkg.go.dev/github.com/TheCryptoDonkey/aperture-phoenixd)

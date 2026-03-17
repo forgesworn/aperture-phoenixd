@@ -9,6 +9,10 @@ Implements Aperture's `mint.Challenger` and `auth.InvoiceChecker` interfaces aga
 
 ## Quick start
 
+```bash
+go get github.com/TheCryptoDonkey/aperture-phoenixd
+```
+
 ```go
 import "github.com/TheCryptoDonkey/aperture-phoenixd"
 
