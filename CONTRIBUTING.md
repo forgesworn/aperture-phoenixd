@@ -3,7 +3,7 @@
 ## Setup
 
 ```bash
-git clone https://github.com/TheCryptoDonkey/aperture-phoenixd.git
+git clone https://github.com/forgesworn/aperture-phoenixd.git
 cd aperture-phoenixd
 go build ./...
 ```

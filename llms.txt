@@ -18,13 +18,13 @@ Lightning node. Works with `strictVerify=false` (Aperture's default).
 Install:
 
 ```
-go get github.com/TheCryptoDonkey/aperture-phoenixd
+go get github.com/forgesworn/aperture-phoenixd
 ```
 
 Use:
 
 ```go
-import phoenixd "github.com/TheCryptoDonkey/aperture-phoenixd"
+import phoenixd "github.com/forgesworn/aperture-phoenixd"
 
 challenger := phoenixd.NewChallenger("http://localhost:9740", "your-phoenixd-password")
 
@@ -62,7 +62,7 @@ Wire into Aperture using the ~20-line patch in `testdata/aperture-patch.diff`.
 
 ## Optional
 
-- [README](https://github.com/TheCryptoDonkey/aperture-phoenixd/blob/main/README.md)
-- [Aperture integration patch](https://github.com/TheCryptoDonkey/aperture-phoenixd/blob/main/testdata/aperture-patch.diff)
-- [Echo server demo](https://github.com/TheCryptoDonkey/aperture-phoenixd/tree/main/cmd/echo-server)
-- [GoDoc](https://pkg.go.dev/github.com/TheCryptoDonkey/aperture-phoenixd)
+- [README](https://github.com/forgesworn/aperture-phoenixd/blob/main/README.md)
+- [Aperture integration patch](https://github.com/forgesworn/aperture-phoenixd/blob/main/testdata/aperture-patch.diff)
+- [Echo server demo](https://github.com/forgesworn/aperture-phoenixd/tree/main/cmd/echo-server)
+- [GoDoc](https://pkg.go.dev/github.com/forgesworn/aperture-phoenixd)

@@ -1,3 +1,5 @@
+//go:build ignore
+
 // This file is designed to be copied into lightninglabs/aperture/challenger/
 // during the Docker build. It uses Aperture's actual types.
 package challenger

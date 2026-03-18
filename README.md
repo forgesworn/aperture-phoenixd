@@ -10,11 +10,11 @@ Implements Aperture's `mint.Challenger` and `auth.InvoiceChecker` interfaces aga
 ## Quick start
 
 ```bash
-go get github.com/TheCryptoDonkey/aperture-phoenixd
+go get github.com/forgesworn/aperture-phoenixd
 ```
 
 ```go
-import "github.com/TheCryptoDonkey/aperture-phoenixd"
+import "github.com/forgesworn/aperture-phoenixd"
 
 challenger := phoenixd.NewChallenger("http://localhost:9740", "your-phoenixd-password")
 
@@ -54,8 +54,8 @@ go run ./cmd/echo-server
 | Project | Role |
 |---------|------|
 | [aperture](https://github.com/lightninglabs/aperture) | L402 reverse proxy (what this adapter plugs into) |
-| [aperture-announce](https://github.com/TheCryptoDonkey/aperture-announce) | Announces Aperture services on Nostr for discovery |
-| [402-mcp](https://github.com/TheCryptoDonkey/402-mcp) | MCP client that discovers and pays for L402 APIs |
+| [aperture-announce](https://github.com/forgesworn/aperture-announce) | Announces Aperture services on Nostr for discovery |
+| [402-mcp](https://github.com/forgesworn/402-mcp) | MCP client that discovers and pays for L402 APIs |
 
 ## Licence
 

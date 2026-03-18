@@ -26,7 +26,7 @@ Apply with: git apply testdata/aperture-patch.diff
 @@ -XX,6 +XX,10 @@ import (
  	"github.com/lightninglabs/aperture/auth"
  	"github.com/lightninglabs/aperture/mint"
-+	phoenixd "github.com/TheCryptoDonkey/aperture-phoenixd"
++	phoenixd "github.com/forgesworn/aperture-phoenixd"
  )
 
 @@ -XX,6 +XX,14 @@ func (a *Aperture) Start(errChan chan error) error {

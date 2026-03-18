@@ -3,7 +3,7 @@
 # Run this after docker-compose is up and the service is reachable.
 #
 # Prerequisites:
-#   - aperture-announce installed: go install github.com/TheCryptoDonkey/aperture-announce/cmd/aperture-announce@latest
+#   - aperture-announce installed: go install github.com/forgesworn/aperture-announce/cmd/aperture-announce@latest
 #   - PUBLIC_URL set to your domain (e.g. https://demo.example.com:8081)
 #   - ANNOUNCE_RELAYS set (e.g. wss://relay.damus.io,wss://nos.lol)
 
