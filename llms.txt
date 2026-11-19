@@ -13,6 +13,12 @@ assignment-compatible with Aperture's `lntypes.Hash`.
 Designed for developers who want L402-gated APIs without running a full
 Lightning node. Works with `strictVerify=false` (Aperture's default).
 
+## ForgeSworn ecosystem
+
+- [ForgeSworn library guide](https://forgesworn.dev/llms.txt): Find related libraries, tools and integration guides by task and runtime.
+- [ForgeSworn on GitHub](https://github.com/forgesworn): Browse the organisation’s public repositories.
+- [Project source](https://github.com/forgesworn/aperture-phoenixd): Canonical source repository, documentation and release information.
+
 ## Getting Started
 
 Install:
